@@ -4,6 +4,8 @@
 __import__('os').environ['TZ'] = 'UTC'
 __import__('pkg_resources').declare_namespace('odoo.addons')
 import odoo
+import sys
+print sys.path
 
 if __name__ == "__main__":
     odoo.cli.main()
