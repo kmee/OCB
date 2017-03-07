@@ -13,6 +13,8 @@ from contextlib import contextmanager
 import subprocess
 import logging
 import os
+import sys
+print sys.path
 import passlib.utils
 import re
 import socket
