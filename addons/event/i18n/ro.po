@@ -506,7 +506,7 @@ msgstr "<i>la</i>"
 #: model:event.event,description:event.event_1
 #: model:event.event,description:event.event_3
 msgid "<small>John Doe, CEO</small>"
-msgstr ""
+msgstr "<small>John Doe, CEO</small>"
 
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_form
@@ -1976,7 +1976,7 @@ msgstr "Luna aceasta"
 #: code:addons/event/models/event.py:438
 #, python-format
 msgid "This week"
-msgstr "Această săptămână"
+msgstr "Săpt. curentă"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_config_settings_module_event_sale
