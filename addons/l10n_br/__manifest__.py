@@ -53,4 +53,5 @@ come with any additional paid permission for online use of 'private modules'.
         'views/account_view.xml',
         'data/account_chart_template_data.yml',
     ],
+    'installable': False, 
 }
