@@ -18,5 +18,9 @@ Estrtura dos relatórios contábeis
     'website': 'http://www.odoobrasil.org.br',
     'depends': ['account'],
     'data': [
+        'data/account_account_type_dre_data.xml',
+        'data/account_account_type_balanco_data.xml',
+        'data/account_financial_report_dre_data.xml',
+        'data/account_financial_report_balanco_data.xml',
     ],
 }
