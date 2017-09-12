@@ -383,7 +383,7 @@ var FieldFloat = FieldChar.extend({
         }
         if (this.digits !== undefined && this.digits.length === 2) {
             value_ = utils.round_decimals(value_, this.digits[1]);
-        }        
+        }
         this._super(value_);
     }
 });
@@ -1317,7 +1317,7 @@ var FieldStatus = common.AbstractField.extend({
     render_value: function() {
         var self = this;
         var content = QWeb.render("FieldStatus.content", {
-            'widget': self, 
+            'widget': self,
             'value_folded': _.find(self.selection.folded, function(i){return i[0] === self.get('value');})
         });
         self.$el.html(content);
@@ -1469,9 +1469,13 @@ var FieldMonetary = FieldFloat.extend({
     },
     add_symbol: function() {
         var currency = this.get('currency_info');
-        if(currency) {
-            var before = (currency.position === 'before');
-            this.$el[(before)? 'prepend' : 'append']($('<span/>', {html: currency.symbol}));
+        if (currency) {
+            if (currency.position === 'before') {
+                this.$el['prepend']($('<span/>', {html: currency.symbol + '&nbsp;'}));
+            }
+            else {
+                this.$el['append']($('<span/>', {html: '&nbsp;' + currency.symbol}));
+            }
         }
     },
     get_currency_info: function() {
@@ -1508,7 +1512,7 @@ var FieldMonetary = FieldFloat.extend({
 
 /**
     This widget is intended to be used on stat button numeric fields.  It will display
-    the value   many2many and one2many. It is a read-only field that will 
+    the value   many2many and one2many. It is a read-only field that will
     display a simple string "<value of field> <label of the field>"
 */
 var StatInfo = common.AbstractField.extend({

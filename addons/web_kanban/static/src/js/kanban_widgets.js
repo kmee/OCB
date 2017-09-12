@@ -111,7 +111,7 @@ var KanbanSelection = AbstractField.extend({
         var stage_data = {
             id: stage_id,
             legend_normal: self.parent.values.legend_normal ? self.parent.values.legend_normal.value : undefined,
-            legend_blocked: self.parent.values.legend_blocked ? self.parent.values.legend_blocked.value: undefined, 
+            legend_blocked: self.parent.values.legend_blocked ? self.parent.values.legend_blocked.value: undefined,
             legend_done: self.parent.values.legend_done ? self.parent.values.legend_done.value: undefined,
         };
         _.map(self.field.selection || [], function(res) {
@@ -122,10 +122,10 @@ var KanbanSelection = AbstractField.extend({
             if (res[0] === 'normal') {
                 value.state_name = stage_data.legend_normal ? stage_data.legend_normal : res[1];
             } else if (res[0] === 'done') {
-                value.state_class = 'oe_kanban_status_green'; 
+                value.state_class = 'oe_kanban_status_green';
                 value.state_name = stage_data.legend_done ? stage_data.legend_done : res[1];
-            } else { 
-                value.state_class = 'oe_kanban_status_red'; 
+            } else {
+                value.state_class = 'oe_kanban_status_red';
                 value.state_name = stage_data.legend_blocked ? stage_data.legend_blocked : res[1];
             }
             _data.push(value);
@@ -240,7 +240,7 @@ var KanbanProgressBar = AbstractField.extend({
                         // parent.view.dataset.call(this.on_change, [parent.id, value]).then(function() {
                         //     self.toggle_progressbar();
                         // });
-                    } 
+                    }
                 });
             }
         });
@@ -265,9 +265,9 @@ var KanbanMonetary = AbstractField.extend({
         var value = formats.format_value(this.field.raw_value || 0, {type: this.field.type, digits: digits_precision});
         if (currency) {
             if (currency.position === "after") {
-                value += currency.symbol;
+                value += ' ' + currency.symbol;
             } else {
-                value = currency.symbol + value;
+                value = currency.symbol + ' ' + value;
             }
         }
         this.$el.text(value);
