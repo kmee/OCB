@@ -41,9 +41,9 @@
         'test/average_price.yml',
     ],
     'demo': [
-        'data/purchase_order_demo.yml',
-        'data/purchase_demo.xml',
-        'data/purchase_stock_demo.yml',
+        #'data/purchase_order_demo.yml',
+        #'data/purchase_demo.xml',
+        #'data/purchase_stock_demo.yml',
     ],
     'installable': True,
     'auto_install': False,
