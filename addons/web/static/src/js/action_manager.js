@@ -872,7 +872,7 @@ var ActionManager = Widget.extend({
         }
         else if (action.target === 'self') {
             framework.redirect(url);
-            return $.Deferred(); // The action is finished only when the redirection is done
+            // return $.Deferred(); // The action is finished only when the redirection is done
         } else {
             window.open(url, '_blank');
         }
