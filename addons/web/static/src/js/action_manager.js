@@ -867,7 +867,10 @@ var ActionManager = Widget.extend({
             url = $.param.querystring(url, {debug: session.debug});
         }
 
-        if (action.target === 'self') {
+        if (action.target === 'download') {
+            framework.redirect(url);
+        }
+        else if (action.target === 'self') {
             framework.redirect(url);
             return $.Deferred(); // The action is finished only when the redirection is done
         } else {
