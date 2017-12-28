@@ -3863,7 +3863,7 @@ class BaseModel(object):
         # Those tuples will be used by the string formatting for the INSERT
         # statement below.
         updates = [
-            ('id', "nextval('%s')" % self._sequence),
+            ('id', "mmr_sequence_nextval('%s')" % self._sequence),
         ]
 
         upd_todo = []
