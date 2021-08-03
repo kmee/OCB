@@ -396,6 +396,6 @@ m = Manager()
 m.daemon = True
 m.start()
 
-bm = BtManager()
-bm.daemon = True
-bm.start()
+#bm = BtManager()
+#bm.daemon = True
+#bm.start()
