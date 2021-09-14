@@ -186,6 +186,8 @@ class Serial(Escpos):
 
     def _raw(self, msg):
         """ Print any command sent in raw format """
+        if type(msg) is str:
+            msg = msg.encode("utf-8")
         self.device.write(msg)
 
 
@@ -219,6 +221,8 @@ class Network(Escpos):
 
 
     def _raw(self, msg):
+        if type(msg) is str:
+            msg = msg.encode("utf-8")
         self.device.send(msg)
 
 
