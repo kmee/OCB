@@ -827,7 +827,12 @@ class AccountMoveLine(models.Model):
 
             # Compute 'price_total'.
             if line.tax_ids:
-                taxes_res = line.tax_ids.compute_all(
+                taxes_res = line.tax_ids.with_context({
+                        'tax_computation_context': {
+                        'shopee_3pl_goods_invoice_value': line.shopee_3pl_goods_invoice_value or 0,
+                        }
+                    }
+                ).compute_all(
                     line_discount_price_unit,
                     quantity=line.quantity,
                     currency=line.currency_id,

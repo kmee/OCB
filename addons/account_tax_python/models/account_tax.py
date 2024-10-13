@@ -35,7 +35,8 @@ class AccountTaxPython(models.Model):
             product = product.product_variant_id
         if self.amount_type == 'code':
             company = self.env.company
-            localdict = {'base_amount': base_amount, 'price_unit':price_unit, 'quantity': quantity, 'product':product, 'partner':partner, 'company': company}
+            localdict = self._context.get('tax_computation_context', {})
+            localdict.update({'base_amount': base_amount, 'price_unit':price_unit, 'quantity': quantity, 'product':product, 'partner':partner, 'company': company})
             try:
                 safe_eval(self.python_compute, localdict, mode="exec", nocopy=True)
             except Exception as e:
