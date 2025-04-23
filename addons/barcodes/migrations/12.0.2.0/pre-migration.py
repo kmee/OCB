@@ -8,11 +8,13 @@ def migrate(env, version):
     cr = env.cr
     # pre-creation for speed up
     if not openupgrade.column_exists(cr, 'res_company', 'nomenclature_id'):
-        openupgrade.add_fields(
-            env, [
-                ('nomenclature_id', 'res.company', 'res_company', 'many2one',
-                 'int4', 'barcodes'),
-            ],
+        # Add column directly using SQL to avoid ORM defaults
+        openupgrade.logged_query(
+            cr,
+            """
+            ALTER TABLE res_company
+            ADD COLUMN nomenclature_id integer
+            """
         )
 
         # done here instead of post-migration to avoid the default
