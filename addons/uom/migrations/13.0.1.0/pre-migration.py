@@ -9,9 +9,17 @@ _column_copies = {
     ],
 }
 
+def fix_sequence_column(env):
+    """Fix the sequence column type mismatch"""
+    env.cr.execute("""
+        ALTER TABLE uom_uom
+        ALTER COLUMN sequence
+        SET DEFAULT 1
+    """)
 
 @openupgrade.migrate()
 def migrate(env, version):
+    fix_sequence_column(env)
     openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.map_values(
         env.cr,
