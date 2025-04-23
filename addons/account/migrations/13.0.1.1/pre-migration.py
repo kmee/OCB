@@ -53,11 +53,6 @@ _table_renames = [
     ('account_invoice_payment_rel', 'old_account_invoice_payment_rel'),
 ]
 
-_field_adds = [
-    ("account_root_id", "account.move.line", "account_move_line", "many2one", False, "account"),
-    ("tax_group_id", "account.move.line", "account_move_line", "many2one", False, "account")
-]
-
 xmlid_renames_payment_terms = [
     ("account.account_payment_term_net", "account.account_payment_term_30days"),
 ]
@@ -322,7 +317,6 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     if openupgrade.table_exists(cr, 'sale_order'):
         openupgrade.rename_fields(env, _field_sale_renames)
-        # https://github.com/odoo/odoo/commit/ca25a692bd19fdca2b2600f2054eb419aae28999
         openupgrade.logged_query(
             env.cr, """
             UPDATE ir_config_parameter
@@ -332,7 +326,6 @@ def migrate(env, version):
     openupgrade.rename_models(cr, _model_renames)
     openupgrade.rename_tables(cr, _table_renames)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_payment_terms)
-    openupgrade.add_fields(env, _field_adds)
     type_change_account_fiscal_position_zips(env)
     create_account_invoice_amount_tax_company_signed(env)
     create_account_move_new_columns(env)
@@ -345,3 +338,24 @@ def migrate(env, version):
     add_helper_invoice_move_rel(env)
     if openupgrade.table_exists(cr, 'account_voucher'):
         add_helper_voucher_move_rel(env)
+
+    # Adicionar as colunas manualmente
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DO $$
+        BEGIN
+            IF NOT EXISTS (SELECT 1 FROM information_schema.columns
+                         WHERE table_name = 'account_move_line'
+                         AND column_name = 'account_root_id') THEN
+                ALTER TABLE account_move_line ADD COLUMN account_root_id integer;
+            END IF;
+            IF NOT EXISTS (SELECT 1 FROM information_schema.columns
+                         WHERE table_name = 'account_move_line'
+                         AND column_name = 'tax_group_id') THEN
+                ALTER TABLE account_move_line ADD COLUMN tax_group_id integer;
+            END IF;
+        END;
+        $$;
+        """
+    )
