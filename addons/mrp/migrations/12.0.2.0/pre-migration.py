@@ -24,18 +24,13 @@ def switch_mrp_xml_id_noupdate(cr):
 
 def precompute_mrp_production__product_uom_qty(env):
     """Precompute the product_uom_qty field of mrp.production."""
-    openupgrade.add_fields(
-        env, [
-            (
-                "product_uom_qty",
-                "mrp.production",
-                "mrp_production",
-                "float",
-                False,
-                "mrp",
-            ),
-        ]
+    # Add column with proper numeric type and default
+    openupgrade.logged_query(
+        env.cr,
+        """ALTER TABLE mrp_production
+           ADD COLUMN product_uom_qty numeric DEFAULT 0""",
     )
+
     openupgrade.logged_query(
         env.cr,
         """UPDATE mrp_production mp
