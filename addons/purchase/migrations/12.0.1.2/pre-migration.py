@@ -12,11 +12,10 @@ xmlid_renames = [
 def precompute_pol_product_uom_qty(env):
     """when computing product_uom_qty in _compute_product_uom_qty(),
     we need to avoid the UserError in _compute_quantity()"""
-    openupgrade.add_fields(
-        env, [
-            ('product_uom_qty', 'purchase.order.line', 'purchase_order_line',
-             'float', 'double precision', 'purchase'),
-        ],
+    openupgrade.logged_query(
+        env.cr,
+        """ALTER TABLE purchase_order_line
+           ADD COLUMN product_uom_qty double precision DEFAULT 0.0"""
     )
     # On first place, assign the same value when UoM has not changed
     openupgrade.logged_query(
