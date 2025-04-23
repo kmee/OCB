@@ -41,7 +41,7 @@ def move_mailing_campaign_to_utm_campaign(env):
 
 def add_utm_stage_fields(env):
     openupgrade.add_fields(env, [
-        ("sequence", "utm.stage", "utm_stage", "integer", False, "utm"),
+        ("sequence", "utm.stage", "utm_stage", "integer", False, "utm", 10),
     ])
 
 
