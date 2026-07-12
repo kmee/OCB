@@ -413,11 +413,15 @@ class ResCompany(models.Model):
             'prefix': 'BATCH/%(range_year)s/',
         }
 
+    # KMEE PATCH (18.0): fix temporario ate upstream corrigir. Ver
+    # https://github.com/odoo/odoo/pull/273905 (commit que introduziu o bug,
+    # fechado sem merge visivel no GitHub - processo interno da Odoo SA).
+    # Remover este patch quando um sync futuro do OCB ja trouxer o fix.
     def _create_batch_payment_sequence(self):
         for company in self:
             if not company.batch_payment_sequence_id:
                 sequence = self.env['ir.sequence'].sudo().create(
-                    self._get_batch_payment_sequence_values()
+                    company._get_batch_payment_sequence_values()
                 )
                 company.batch_payment_sequence_id = sequence
 
