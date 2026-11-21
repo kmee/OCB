@@ -1772,7 +1772,7 @@ class AccountMove(models.Model):
         for move in self:
             move.need_cancel_request = move._need_cancel_request()
 
-    @api.depends('partner_id', 'invoice_source_email', 'partner_id.display_name')
+    @api.depends('partner_id', 'invoice_source_email', 'partner_id.complete_name')
     def _compute_invoice_partner_display_info(self):
         for move in self:
             vendor_display_name = move.partner_id.with_context({'lang': self.env.lang}).display_name
@@ -1848,7 +1848,7 @@ class AccountMove(models.Model):
         for move in self.filtered(lambda move: move.is_invoice()):
             move.access_url = '/my/invoices/%s' % (move.id)
 
-    @api.depends('move_type', 'partner_id', 'partner_id.lang', 'company_id')
+    @api.depends('move_type', 'partner_id', 'company_id')
     def _compute_narration(self):
         use_invoice_terms = self.env['ir.config_parameter'].sudo().get_param('account.use_invoice_terms')
         invoice_to_update_terms = self.filtered(lambda m: use_invoice_terms and m.is_sale_document(include_receipts=True))
