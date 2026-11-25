@@ -12,5 +12,10 @@ def _configure_journals(env):
         template_code = company.chart_template
         template_data = ChartTemplate._get_chart_template_data(template_code)['template_data']
         if 'property_stock_account_production_cost_id' in template_data:
-            data = {'property_stock_account_production_cost_id': template_data['property_stock_account_production_cost_id']}
+            value = template_data['property_stock_account_production_cost_id']
+            if not ChartTemplate.ref(value, raise_if_not_found=False):
+                # chart_template is set but its accounts were never actually
+                # loaded (e.g. a demo company created without a real CoA)
+                continue
+            data = {'property_stock_account_production_cost_id': value}
             ChartTemplate._post_load_data(template_code, company, data)
